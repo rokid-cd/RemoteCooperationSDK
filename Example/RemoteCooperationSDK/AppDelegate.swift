@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RemoteCooperationSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,7 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        RKRemoteManager.shared.initRokidRTCSDK(appId: "69F78F3D3CC94D8ABF60AD4AB8712B7D", rtcUrl: "https://rtc.rokid.com", saasUrl: "https://ar-industry-test.rokid.com")
+        
+        RKRemoteManager.shared.loginRokidRTCSDK(token: "", userInfo: UserInfo(id: "", name: "")) { data in
+            
+        } failBlock: { errMsg in
+            
+        }
+        
         return true
     }
 

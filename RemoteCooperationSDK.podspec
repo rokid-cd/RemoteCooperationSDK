@@ -29,14 +29,23 @@ TODO: Add long description of the pod here.
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '10.0'
-
-  s.source_files = 'RemoteCooperationSDK/Classes/**/*'
   
-  # s.resource_bundles = {
-  #   'RemoteCooperationSDK' => ['RemoteCooperationSDK/Assets/*.png']
-  # }
+  s.vendored_frameworks = 'RemoteCooperationSDK/Classes/*.framework'
+  s.resources = 'RemoteCooperationSDK/Assets/*.bundle'
+  
+  s.dependency 'RKILogger'
+  s.dependency 'RKIUtils'
+  s.dependency 'RKIHandyJSON'
+  s.dependency 'Moya'
+  s.dependency 'Starscream'
+  s.dependency 'Kingfisher'
+  s.dependency 'SnapKit', '>= 4.2.0'
+  s.dependency 'Then', '>= 2.7.0'
+  s.dependency 'SCNLine', '~> 1.0'
+  s.dependency 'lottie-ios', '~> 3.1.6'
+  s.dependency 'WMPageController'
+  s.dependency 'ReachabilitySwift'
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'RKRTC'
+  s.dependency 'RKCooperationCore'
 end

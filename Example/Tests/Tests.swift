@@ -1,5 +1,4 @@
 import XCTest
-import RemoteCooperationSDK
 
 class Tests: XCTestCase {
     

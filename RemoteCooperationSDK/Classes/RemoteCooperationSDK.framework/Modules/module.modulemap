@@ -1,0 +1,11 @@
+framework module RemoteCooperationSDK {
+  umbrella header "RemoteCooperationSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module RemoteCooperationSDK.Swift {
+  header "RemoteCooperationSDK-Swift.h"
+  requires objc
+}

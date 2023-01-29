@@ -1,0 +1,589 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RemoteCooperationSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import ARKit
+import AVFoundation
+import Alamofire
+import AudioToolbox
+import Foundation
+import Kingfisher
+import Lottie
+import MediaPlayer
+import MobileCoreServices
+import Moya
+import Photos
+import RKCooperationCore
+import RKIHandyJSON
+import RKILogger
+import RKIUtils
+import RKRTC
+import Reachability
+@_exported import RemoteCooperationSDK
+import ReplayKit
+import SCNLine
+import SnapKit
+import StoreKit
+import Swift
+import SwiftUI
+import UIKit
+import WMPageController
+import WebRTC
+import _Concurrency
+import _StringProcessing
+public enum ARAlterViewShowStyle : Swift.Int {
+  case top
+  case center
+  case bottom
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public typealias AlterActionHandler = () -> Swift.Void
+@objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class SCNTextNode : SceneKit.SCNNode {
+  @_Concurrency.MainActor(unsafe) public var materials: [SceneKit.SCNMaterial] {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var firstMaterial: SceneKit.SCNMaterial? {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var fixedWidth: Swift.Float {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var flatness: CoreFoundation.CGFloat {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var textScale: SceneKit.SCNVector3 {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public init(text: Any? = nil, width: Swift.Float = Float.greatestFiniteMagnitude, isWrapped: Swift.Bool = false, font: UIKit.UIFont? = nil, textScale: Swift.Float = 1, depth: CoreFoundation.CGFloat = 1.0, flatness: CoreFoundation.CGFloat = 0.6, color: UIKit.UIColor = UIColor.blue)
+  @objc deinit
+}
+@_inheritsConvenienceInitializers @objcMembers public class BaseModel<T> : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON where T : RKIHandyJSON.HandyJSON {
+  @objc required override dynamic public init()
+  @objc deinit
+}
+public typealias Callback = ((Swift.Bool, RemoteCooperationSDK.RKErrorCode, RemoteCooperationSDK.RKContactInfoModel, Swift.String?) -> Swift.Void)
+@objc @_inheritsConvenienceInitializers public class RequestManager : ObjectiveC.NSObject {
+  public static var shared: RemoteCooperationSDK.RequestManager
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum RKErrorCode : Swift.Int {
+  case Success
+  case RKNetworkUnavailable
+  case RKAuthReasonTooManyRequests
+  case RKAuthReasonTokenExpired
+  case RKAuthReasonAccessDenied
+  case RKMeetingCreateFailed
+  case RKMeetingJoinFailed
+  case RKAuthReasonTimeOut
+  case RKAuthReasonAppKey
+  case RKAuthReasonNoUser
+  case RKAuthReasonServerLogout
+  case RKAuthReasonAnotherDeviceLogined
+  case RKAuthReasonServerBusy
+  case RKAuthReasonJCInitFailed
+  case RKAuthReasonCompanyIdError
+  case RKAuthReasonAccountError
+  case RKAuthReasonPasswordError
+  case RKAuthReasonOther
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public let kNotiReportError: Swift.String
+@objc @_inheritsConvenienceInitializers @objcMembers public class NotiName : ObjectiveC.NSObject {
+  @objc public static let joinMeeting: Swift.String
+  @objc public static let inviteUser: Swift.String
+  @objc public static let mediaChannelOnParticipantJoin: Swift.String
+  @objc public static let mediaChannelOnJoinSuccess: Swift.String
+  @objc public static let onRoomFullScreen: Swift.String
+  @objc public static let offRoomFullScreen: Swift.String
+  @objc public static let mediaChannelStateChange: Swift.String
+  @objc public static let meetingError: Swift.String
+  @objc public static let takeSnapshot: Swift.String
+  @objc public static let onRemoteRecord: Swift.String
+  @objc public static let applicationWillTerminate: Swift.String
+  @objc public static let IMGoInviteMemeberVC: Swift.String
+  @objc public static let creatMeetingSuccess: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKSDKSetting : ObjectiveC.NSObject {
+  @objc public static var shareInstance: RemoteCooperationSDK.RKSDKSetting
+  @objc public var apiHost: Swift.String
+  @objc public var evaluatorHosts: Swift.String
+  @objc public var folderName: Swift.String
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class RKARImageToolView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class RKBaseCell : UIKit.UITableViewCell {
+  @_Concurrency.MainActor(unsafe) public var bgView: UIKit.UIView {
+    get
+    set
+  }
+  @_Concurrency.MainActor(unsafe) public var lineView: UIKit.UIView {
+    get
+    set
+  }
+  @available(iOS 3.0, *)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(style: UIKit.UITableViewCell.CellStyle, reuseIdentifier: Swift.String?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKLandOrientation : ObjectiveC.NSObject {
+  @objc public static var shared: RemoteCooperationSDK.RKLandOrientation
+  @objc public var orientation: UIKit.UIInterfaceOrientationMask
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class RKBaseViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var preferredStatusBarStyle: UIKit.UIStatusBarStyle {
+    @objc get
+  }
+  @objc deinit
+  @_Concurrency.MainActor(unsafe) @objc override dynamic open func viewDidLoad()
+  @_Concurrency.MainActor(unsafe) open func setupLeftNavBarItem()
+  @_Concurrency.MainActor(unsafe) open func setupRightNavBarItem()
+  @_Concurrency.MainActor(unsafe) open func setupView()
+  @objc @_Concurrency.MainActor(unsafe) open func leftBarButtonItemAction()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class RKCallAlertView : UIKit.UIView {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKContactInfoModel : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var userId: Swift.String
+  @objc public var username: Swift.String
+  @objc public var realName: Swift.String
+  @objc public var licenseCode: Swift.String
+  @objc public var postName: Swift.String
+  @objc public var phoneNum: Swift.String
+  @objc public var companyName: Swift.String
+  @objc public var headUrl: Swift.String
+  @objc public var headPortrait: Swift.String
+  @objc public var unitName: Swift.String
+  @objc public var licenseEndTime: Swift.Int64
+  @objc public var deviceType: Swift.Int
+  @objc public var status: Swift.Int
+  @objc public var isSlam: Swift.Bool
+  @objc public var selected: Swift.Bool
+  @objc public var postCode: Swift.String
+  @objc public var deviceInfo: RemoteCooperationSDK.DeviceInfoModel
+  @objc public var isSelf: Swift.Bool {
+    @objc get
+  }
+  @objc public var isSupportPush: Swift.Bool {
+    @objc get
+  }
+  @objc public var isAvailable: Swift.Bool {
+    @objc get
+  }
+  @objc public var isSupportAR: Swift.Bool {
+    @objc get
+  }
+  @objc public var isSnapchat: Swift.Bool
+  @objc public var isVideoPoint: Swift.Bool
+  @objc public var isVideoControl: Swift.Bool {
+    @objc get
+  }
+  public func mapping(mapper: RKIHandyJSON.HelpingMapper)
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKContactGroupModel : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var onlineAccountNum: Swift.Int
+  @objc public var groupName: Swift.String
+  @objc public var contactsList: [RemoteCooperationSDK.RKContactInfoModel]
+  @objc public var totalAccountNum: Swift.Int
+  @objc public var groupId: Swift.String
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKContactListModel : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var contactsList: [RemoteCooperationSDK.RKContactInfoModel]
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class DeviceInfoModel : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var companyId: Swift.String
+  @objc public var deviceType: Swift.Int
+  @objc public var isSlam: Swift.Bool
+  @objc public var registerId: Swift.String
+  @objc required override dynamic public init()
+  @objc deinit
+}
+public enum ResolutionType : Swift.Int {
+  case RESOLUTION_360
+  case RESOLUTION_720
+  case RESOLUTION_1080
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public class UserInfo : ObjectiveC.NSObject {
+  final public let id: Swift.String
+  final public let name: Swift.String
+  final public let avatar: Swift.String?
+  final public let unitName: Swift.String?
+  public var deviceType: Swift.String?
+  public var status: Swift.String?
+  public init(id: Swift.String, name: Swift.String, avatar: Swift.String? = nil, unitName: Swift.String? = nil, deviceType: Swift.String? = nil, status: Swift.String? = nil)
+  @objc deinit
+}
+@objcMembers @objc public class RKDeviceParams : ObjectiveC.NSObject {
+  @objc public var isCameraOn: Swift.Bool
+  @objc public var isSpeakerOn: Swift.Bool
+  @objc public var isMicOn: Swift.Bool
+  @objc public var isCloudRecord: Swift.Bool
+  @objc public var isBackCamera: Swift.Bool
+  public var resolution: RemoteCooperationSDK.ResolutionType
+  public init(isCameraOn: Swift.Bool = true, isSpeakerOn: Swift.Bool = true, isMicOn: Swift.Bool = true, isCloudRecord: Swift.Bool = false, isBackCamera: Swift.Bool = false, resolution: RemoteCooperationSDK.ResolutionType = .RESOLUTION_720)
+  @objc deinit
+}
+@objc public protocol RKRTCDelegate : ObjectiveC.NSObjectProtocol {
+  @objc func getContactList() -> [RemoteCooperationSDK.UserInfo]
+  @objc func getContact(byId: Swift.String) -> RemoteCooperationSDK.UserInfo?
+  @objc func previewFile(paths: [Swift.String], index: Swift.Int, type: RemoteCooperationSDK.RKMeetingFileType)
+  @objc func showToast(withText: Swift.String, inView: UIKit.UIView?)
+  @objc func showToast(withText: Swift.String, inView: UIKit.UIView?, completion: ((_ didTap: Swift.Bool) -> Swift.Void)?)
+  @objc func showLoading(inView: UIKit.UIView?)
+  @objc func hideLoading(inView: UIKit.UIView?)
+}
+@objc public enum ShareType : Swift.Int {
+  case screenShare
+  case doodleShare
+  case slamShare
+  case pointVideoShare
+  case videoControlShare
+  case imageDoodleShare
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public protocol RKRTCEventListener : ObjectiveC.NSObjectProtocol {
+  @objc optional func onLogout(reaseon: Swift.Int)
+  @objc optional func onInvite(channelId: Swift.String, userIdList: [Swift.String], MaxJoin: Swift.Int)
+  @objc optional func onCallAccept(channelId: Swift.String, userId: Swift.String)
+  @objc optional func onCallBusy(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
+  @objc optional func onCallRejected(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
+  @objc optional func getMeetingShareStatus(channelId: Swift.String, shareType: RemoteCooperationSDK.ShareType, isFinish: Swift.Bool)
+  @objc optional func rejoinAction()
+  @objc optional func startCooperationAction()
+  @objc optional func leaveMeetingAction()
+}
+@_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @objc public class RKCooperationManager : ObjectiveC.NSObject {
+  @objc public static var shared: RemoteCooperationSDK.RKCooperationManager
+  @objc public var user: RemoteCooperationSDK.UserInfo?
+  @objc public var isLogin: Swift.Bool {
+    @objc get
+  }
+  @objc weak public var delegate: RemoteCooperationSDK.RKRTCDelegate!
+  public typealias successCompletion = (_ data: Any?) -> Swift.Void
+  public typealias failureCompletion = (_ error: Foundation.NSError?) -> Swift.Void
+  @objc public func initWithConfig(appId: Swift.String, rtcUrl: Swift.String, saasUrl: Swift.String, success: @escaping (_ data: Any?) -> Swift.Void, failure: @escaping (_ error: Foundation.NSError?) -> Swift.Void)
+  @objc public func addEventListener(listener: RemoteCooperationSDK.RKRTCEventListener)
+  @objc public func removeEventListener(listener: RemoteCooperationSDK.RKRTCEventListener)
+  @objc public func login(token: Swift.String, user: RemoteCooperationSDK.UserInfo, success: @escaping RemoteCooperationSDK.RKCooperationManager.successCompletion, failure: @escaping RemoteCooperationSDK.RKCooperationManager.failureCompletion)
+  @objc public func logout()
+  @objc public func startCooperation(inviteUsers: [Swift.String], success: @escaping RemoteCooperationSDK.RKCooperationManager.successCompletion, failure: @escaping RemoteCooperationSDK.RKCooperationManager.failureCompletion)
+  @objc public func customStartCooperation(meetingName: Swift.String, inviteUsers: [Swift.String], deviceParams: RemoteCooperationSDK.RKDeviceParams, success: @escaping RemoteCooperationSDK.RKCooperationManager.successCompletion, failure: @escaping RemoteCooperationSDK.RKCooperationManager.failureCompletion)
+  @objc public func inviteCooperation(channelId: Swift.String, userIdList: [Swift.String], success: @escaping RemoteCooperationSDK.RKCooperationManager.successCompletion, failure: @escaping RemoteCooperationSDK.RKCooperationManager.failureCompletion)
+  @objc public func rejoinCooperation(meetingId: Swift.String, meetingName: Swift.String, mediaOn: Swift.Bool = true)
+  @objc public func joinCooperation(meetingId: Swift.String, meetingName: Swift.String, mediaOn: Swift.Bool = true)
+  @objc public func setUploadFolderPath(path: Swift.String)
+  @objc public func setScreenSharingExtansId(shareExtenId: Swift.String)
+  @objc public func uploadSharePixelBuffer(pixelBuffer: CoreVideo.CVPixelBuffer)
+  @objc public func setEvaluatorHosts(host: Swift.String)
+  @objc public func showRKWindow()
+  @objc deinit
+}
+extension RemoteCooperationSDK.RKCooperationManager : RKCooperationCore.RKLoginCallback {
+  @objc dynamic public func onJoinedChannelList(_ channelList: [RKCooperationCore.RKIJoinedChannel]?)
+  @objc dynamic public func onLogin(reason: RKCooperationCore.RKCooperationCode)
+  @objc dynamic public func onLogout(reason: RKCooperationCore.RKCooperationCode)
+}
+extension RemoteCooperationSDK.RKCooperationManager : RKCooperationCore.RKCallListener {
+  @objc dynamic public func onCallAccept(channelId: Swift.String, userId: Swift.String)
+  @objc dynamic public func onCallBusy(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
+  @objc dynamic public func onCallRejected(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
+}
+public typealias ActionHandler = (Swift.Int) -> Swift.Void
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class RKCustomActionView : RemoteCooperationSDK.RKMaskView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+extension UIKit.UIDevice {
+  @objc @_Concurrency.MainActor(unsafe) public static func switchOrientation(auto: Swift.Bool = false, orientation: UIKit.UIInterfaceOrientation = UIApplication.shared.statusBarOrientation)
+}
+@objc public enum RKMeetingFileType : Swift.Int {
+  case image = 0
+  case video = 1
+  case file = 2
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class RKFileMessageData : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  public var companyId: Swift.String
+  public var companyUserId: Swift.String
+  public var contentType: Swift.String
+  public var createdBy: Swift.String
+  public var fileId: Swift.String
+  public var fileName: Swift.String
+  public var fileUrl: Swift.String
+  public var gmtCreated: Swift.String
+  public var id: Swift.String
+  public var meetingId: Swift.String
+  public var modelDeleted: Swift.Bool
+  public var modelDisabled: Swift.Bool
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class RKLineWidthView : UIKit.UIView {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class RKMaskView : UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func touchesBegan(_ touches: Swift.Set<UIKit.UITouch>, with event: UIKit.UIEvent?)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKMeetingInfo : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var channelId: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc public var channelname: Swift.String
+  @objc public var channelPassword: Swift.String
+  @objc public var meetingId: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc public var name: Swift.String
+  @objc public var startTime: Swift.Int64
+  @objc public var resolutionRatio: Swift.String
+  @objc public var fromUserId: Swift.String
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class RKMeetingManager : ObjectiveC.NSObject {
+  public static var shared: RemoteCooperationSDK.RKMeetingManager
+  public var rkSDKWindow: UIKit.UIWindow {
+    get
+    set
+  }
+  public var oldWindow: UIKit.UIWindow?
+  public var isMeeting: Swift.Bool {
+    get
+  }
+  public var backCamera: Swift.Bool
+  public var currentBackCamera: Swift.Bool
+  public var cameraSwitch: Swift.Bool {
+    get
+    set
+  }
+  public var audioSwitch: Swift.Bool {
+    get
+    set
+  }
+  public var channel: RKCooperationCore.RKChannel?
+  public func meetingConfigs(userId: [Swift.String])
+  public func createMeeting(meetingName: Swift.String, userId: [Swift.String], channelParam: RKCooperationCore.RKChannelParam, onSuccess: @escaping RKCooperationCore.RKOnSuccess, onFailed: @escaping RKCooperationCore.RKOnFailed)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension RemoteCooperationSDK.RKMeetingManager {
+  public func joinMeeting(channelId: Swift.String, channelName: Swift.String, mediaOn: Swift.Bool = true)
+  public func rejoinMeeting(channelId: Swift.String, channelName: Swift.String)
+  public func answerCall(channelId: Swift.String, fromUserId: Swift.String, channelName: Swift.String)
+}
+extension RemoteCooperationSDK.RKMeetingManager {
+  public func removeMeetingMember(_ userId: Swift.String)
+  public func leaveMeeting(isCompereLeave: Swift.Bool)
+}
+extension RemoteCooperationSDK.RKMeetingManager {
+  public func pushMeetingVC()
+  public func createRKSDKWindow(vc: UIKit.UIViewController)
+  public func showRKSDKWindow()
+  public func showRKSDKWindowForInvite()
+  public func hiddenRKSDKWindow()
+  public func hiddenRKSDKWindows()
+  public func addIncomingCallListener()
+  public func removeIncomingCallListener()
+}
+extension RemoteCooperationSDK.RKMeetingManager : RKCooperationCore.RKIncomingCallListener {
+  @objc dynamic public func onReceiveCall(channelId: Swift.String, fromUserId: Swift.String, createTime: Swift.Int64, channelTitle: Swift.String, channelParam: RKCooperationCore.RKChannelParam?)
+  @objc dynamic public func onCallCanceled(channelId: Swift.String, userId: Swift.String)
+}
+public enum SwitchType : Swift.String {
+  case audioOn
+  case audioOff
+  case trumpetOn
+  case trumpetOff
+  case cameraOn
+  case cameraOff
+  case cameraSwitch
+  case muteOn
+  case muteOff
+  case imageSaved
+  case markClear
+  case markClearClearByOther
+  case doodleStart
+  case doodleStartByOther
+  case doodleClear
+  case doodleImageStart
+  case doodleImageStartByOther
+  case screenStart
+  case screenStartByOther
+  case screenUnSupport
+  case slamStart
+  case slamStartByOther
+  case slamUnSupport
+  case pointStart
+  case pointStartByOther
+  case videoCtrlStart
+  case videoCtrl
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct RKMeetingSwitchToast {
+}
+extension RemoteCooperationSDK.RKPhotoModel {
+  public enum MediaType : Swift.Int {
+    case unknown
+    case image
+    case gif
+    case livePhoto
+    case video
+    public init?(rawValue: Swift.Int)
+    public typealias RawValue = Swift.Int
+    public var rawValue: Swift.Int {
+      get
+    }
+  }
+}
+@objc public class RKPhotoModel : ObjectiveC.NSObject {
+  final public let ident: Swift.String
+  final public let asset: Photos.PHAsset
+  public var type: RemoteCooperationSDK.RKPhotoModel.MediaType
+  public var duration: Swift.String
+  public var isSelected: Swift.Bool
+  public var second: Swift.Int {
+    get
+  }
+  public var whRatio: CoreFoundation.CGFloat {
+    get
+  }
+  public var previewSize: CoreFoundation.CGSize {
+    get
+  }
+  public init(asset: Photos.PHAsset)
+  public func transformAssetType(for asset: Photos.PHAsset) -> RemoteCooperationSDK.RKPhotoModel.MediaType
+  public func transformDuration(for asset: Photos.PHAsset) -> Swift.String
+  @objc deinit
+}
+public func == (lhs: RemoteCooperationSDK.RKPhotoModel, rhs: RemoteCooperationSDK.RKPhotoModel) -> Swift.Bool
+public let STATUSBAR_HEIGHT: CoreFoundation.CGFloat
+@objc @_inheritsConvenienceInitializers public class UI : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class Dev : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+public func contactFrom(userId: Swift.String) -> Swift.String
+extension UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public func getSubView(name: Swift.String) -> [UIKit.UIView]
+  @_Concurrency.MainActor(unsafe) public func getAllSubViews() -> [UIKit.UIView]
+}
+extension Swift.Sequence where Self.Element : Swift.Hashable {
+  public func containsArr(_ elements: [Self.Element]) -> Swift.Bool
+}
+extension UIKit.UIImage {
+  public func tintColor(_ color: UIKit.UIColor) -> UIKit.UIImage
+}
+public typealias RefreshHandler = () -> Swift.Void
+@objc @_inheritsConvenienceInitializers public class RKColor : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class RKFont : ObjectiveC.NSObject {
+  @objc override dynamic public init()
+  @objc deinit
+}
+public enum RKThirdMsgType : Swift.String {
+  case FILE_SAVE
+  case MEETING_MASTER
+  case MEETING_SEND_MSG
+  case USER_CHANNEL_STATE
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class RKThirdMessage : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var timestamp: Swift.Int64
+  @objc public var channel: Swift.String
+  @objc public var active: Swift.String
+  @objc public var userId: Swift.String
+  @objc public var data: Swift.String
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class RKVideoCtrHelper : ObjectiveC.NSObject {
+  public func msgJson(_ message: RKCooperationCore.RKMessage) -> Swift.String
+  public func videoControReq(toUserId: Swift.String, messageBlock: ((_ message: RKCooperationCore.RKVideoControlMessage) -> Swift.Void))
+  public func videoControRes(toUserId: Swift.String, messageBlock: ((_ message: RKCooperationCore.RKVideoControlMessage) -> Swift.Void))
+  public func sendVideoControlMessage(_ videoCtrMsg: RKCooperationCore.RKVideoControlMessage, toUserId: Swift.String)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension RemoteCooperationSDK.ARAlterViewShowStyle : Swift.Equatable {}
+extension RemoteCooperationSDK.ARAlterViewShowStyle : Swift.Hashable {}
+extension RemoteCooperationSDK.ARAlterViewShowStyle : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.RKErrorCode : Swift.Equatable {}
+extension RemoteCooperationSDK.RKErrorCode : Swift.Hashable {}
+extension RemoteCooperationSDK.RKErrorCode : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.ResolutionType : Swift.Equatable {}
+extension RemoteCooperationSDK.ResolutionType : Swift.Hashable {}
+extension RemoteCooperationSDK.ResolutionType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.ShareType : Swift.Equatable {}
+extension RemoteCooperationSDK.ShareType : Swift.Hashable {}
+extension RemoteCooperationSDK.ShareType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.RKMeetingFileType : Swift.Equatable {}
+extension RemoteCooperationSDK.RKMeetingFileType : Swift.Hashable {}
+extension RemoteCooperationSDK.RKMeetingFileType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.SwitchType : Swift.Equatable {}
+extension RemoteCooperationSDK.SwitchType : Swift.Hashable {}
+extension RemoteCooperationSDK.SwitchType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.RKPhotoModel.MediaType : Swift.Equatable {}
+extension RemoteCooperationSDK.RKPhotoModel.MediaType : Swift.Hashable {}
+extension RemoteCooperationSDK.RKPhotoModel.MediaType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.RKThirdMsgType : Swift.Equatable {}
+extension RemoteCooperationSDK.RKThirdMsgType : Swift.Hashable {}
+extension RemoteCooperationSDK.RKThirdMsgType : Swift.RawRepresentable {}
