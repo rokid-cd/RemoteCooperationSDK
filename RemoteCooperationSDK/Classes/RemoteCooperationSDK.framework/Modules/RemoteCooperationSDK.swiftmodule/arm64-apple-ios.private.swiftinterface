@@ -1,6 +1,6 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 5.7.1 (swiftlang-5.7.1.135.3 clang-1400.0.29.51)
-// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RemoteCooperationSDK
+// swift-compiler-version: Apple Swift version 5.7.2 (swiftlang-5.7.2.135.5 clang-1400.0.29.51)
+// swift-module-flags: -target arm64-apple-ios11.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name RemoteCooperationSDK
 // swift-module-flags-ignorable: -enable-bare-slash-regex
 import ARKit
 import AVFoundation
@@ -13,6 +13,7 @@ import MediaPlayer
 import MobileCoreServices
 import Moya
 import Photos
+import RKBaseModule
 import RKCooperationCore
 import RKIHandyJSON
 import RKILogger
@@ -26,6 +27,7 @@ import SnapKit
 import StoreKit
 import Swift
 import SwiftUI
+import Then
 import UIKit
 import WMPageController
 import WebRTC
@@ -245,6 +247,8 @@ public enum ResolutionType : Swift.Int {
   final public let unitName: Swift.String?
   public var deviceType: Swift.String?
   public var status: Swift.String?
+  public var mark: Swift.String?
+  public var extra: Swift.String?
   public init(id: Swift.String, name: Swift.String, avatar: Swift.String? = nil, unitName: Swift.String? = nil, deviceType: Swift.String? = nil, status: Swift.String? = nil)
   @objc deinit
 }
@@ -261,11 +265,6 @@ public enum ResolutionType : Swift.Int {
 @objc public protocol RKRTCDelegate : ObjectiveC.NSObjectProtocol {
   @objc func getContactList() -> [RemoteCooperationSDK.UserInfo]
   @objc func getContact(byId: Swift.String) -> RemoteCooperationSDK.UserInfo?
-  @objc func previewFile(paths: [Swift.String], index: Swift.Int, type: RemoteCooperationSDK.RKMeetingFileType)
-  @objc func showToast(withText: Swift.String, inView: UIKit.UIView?)
-  @objc func showToast(withText: Swift.String, inView: UIKit.UIView?, completion: ((_ didTap: Swift.Bool) -> Swift.Void)?)
-  @objc func showLoading(inView: UIKit.UIView?)
-  @objc func hideLoading(inView: UIKit.UIView?)
 }
 @objc public enum ShareType : Swift.Int {
   case screenShare
@@ -286,10 +285,9 @@ public enum ResolutionType : Swift.Int {
   @objc optional func onCallAccept(channelId: Swift.String, userId: Swift.String)
   @objc optional func onCallBusy(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
   @objc optional func onCallRejected(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
-  @objc optional func getMeetingShareStatus(channelId: Swift.String, shareType: RemoteCooperationSDK.ShareType, isFinish: Swift.Bool)
   @objc optional func rejoinAction()
   @objc optional func startCooperationAction()
-  @objc optional func leaveMeetingAction()
+  @objc optional func leaveMeeting(meeting: Swift.String)
 }
 @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @objcMembers @objc public class RKCooperationManager : ObjectiveC.NSObject {
   @objc public static var shared: RemoteCooperationSDK.RKCooperationManager
@@ -300,7 +298,7 @@ public enum ResolutionType : Swift.Int {
   @objc weak public var delegate: RemoteCooperationSDK.RKRTCDelegate!
   public typealias successCompletion = (_ data: Any?) -> Swift.Void
   public typealias failureCompletion = (_ error: Foundation.NSError?) -> Swift.Void
-  @objc public func initWithConfig(appId: Swift.String, rtcUrl: Swift.String, saasUrl: Swift.String, success: @escaping (_ data: Any?) -> Swift.Void, failure: @escaping (_ error: Foundation.NSError?) -> Swift.Void)
+  @objc public func initWithConfig(appId: Swift.String, rtcUrl: Swift.String, saasUrl: Swift.String, disabledTrust: [Swift.String], success: @escaping (_ data: Any?) -> Swift.Void, failure: @escaping (_ error: Foundation.NSError?) -> Swift.Void)
   @objc public func addEventListener(listener: RemoteCooperationSDK.RKRTCEventListener)
   @objc public func removeEventListener(listener: RemoteCooperationSDK.RKRTCEventListener)
   @objc public func login(token: Swift.String, user: RemoteCooperationSDK.UserInfo, success: @escaping RemoteCooperationSDK.RKCooperationManager.successCompletion, failure: @escaping RemoteCooperationSDK.RKCooperationManager.failureCompletion)
@@ -313,7 +311,6 @@ public enum ResolutionType : Swift.Int {
   @objc public func setUploadFolderPath(path: Swift.String)
   @objc public func setScreenSharingExtansId(shareExtenId: Swift.String)
   @objc public func uploadSharePixelBuffer(pixelBuffer: CoreVideo.CVPixelBuffer)
-  @objc public func setEvaluatorHosts(host: Swift.String)
   @objc public func showRKWindow()
   @objc deinit
 }
@@ -552,6 +549,7 @@ public enum RKThirdMsgType : Swift.String {
   @objc public var active: Swift.String
   @objc public var userId: Swift.String
   @objc public var data: Swift.String
+  @objc public var channelId: Swift.String
   @objc required override dynamic public init()
   @objc deinit
 }
