@@ -12,7 +12,6 @@
 
 #import "RKPixelBufferConvert.h"
 #import "Aspects.h"
-#import "RKRoteSupported.h"
 #import "RemoteCooperationSDK-Bridging-Header.h"
 
 FOUNDATION_EXPORT double RemoteCooperationSDKVersionNumber;

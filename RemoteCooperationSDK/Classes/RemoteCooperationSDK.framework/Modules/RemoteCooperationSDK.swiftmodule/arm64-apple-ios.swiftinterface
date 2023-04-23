@@ -22,6 +22,7 @@ import RKRTC
 import Reachability
 @_exported import RemoteCooperationSDK
 import ReplayKit
+import RokidReplayKit
 import SCNLine
 import SnapKit
 import StoreKit
@@ -44,6 +45,110 @@ public enum ARAlterViewShowStyle : Swift.Int {
   }
 }
 public typealias AlterActionHandler = () -> Swift.Void
+public enum ARMsgType : Swift.String, RKIHandyJSON.HandyJSONEnum {
+  case UnExtra
+  case Extra
+  case Call
+  case CallReject
+  case CallBusy
+  case CallCancel
+  case CallAccept
+  case Share
+  case Doodle
+  case Slam
+  case PointVideo
+  case VideoControl
+  case KeepSilence
+  case SyncUserInfo
+  case UserInfoRequest
+  case UserInfoResponse
+  case SyncMeetingInfoRequest
+  case SyncMeetingInfoResponse
+  case MuteOn
+  case MuteOff
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers public class ARExtensionMessage : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  public var messageId: Swift.String?
+  public var code: Swift.Int?
+  public var errorMessage: Swift.String?
+  public var promoterUserId: Swift.String?
+  public var executorUserId: Swift.String?
+  public init(executorUserId: Swift.String)
+  @objc required override dynamic public init()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class ARPoint : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  public var x: Swift.Float?
+  public var y: Swift.Float?
+  @objc override required dynamic public init()
+  @objc deinit
+}
+@objc public enum ARSlamMessageType : Swift.Int, RKIHandyJSON.HandyJSONEnum {
+  case MarkDoodleUnknown = -1
+  case MarkDoodleRequest = 0
+  case MarkDoodleResponse = 1
+  case MarkArrowRequest = 2
+  case MarkArrowResponse = 3
+  case MarkWithdrawalRequest = 4
+  case MarkWithdrawalResponse = 5
+  case MarkClearRequest = 6
+  case MarkClearResponse = 7
+  case MarkStopRequest = 8
+  case MarkStopResponse = 9
+  case MarkStartRequest = 10
+  case MarkStartResponse = 11
+  case MarkStatusUpdate = 12
+  case MarkStateRequest = 13
+  case MarkSlamExit = 14
+  case MarkCircleRequest = 15
+  case MarkCircleResponse = 16
+  case MarkLocalImageRequest = 17
+  case MarkLocalImageResponse = 18
+  case MarkCloudImageRequest = 19
+  case MarkCloudImageResponse = 20
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc public enum ARSlamMessageCode : Swift.Int, RKIHandyJSON.HandyJSONEnum {
+  case OK = 0
+  case ExceedTheMaximumNumberLimit = 1
+  case SceneLost = 2
+  case WithdrawalNothing = 3
+  case MarkNoFeatures = 4
+  case MarkNotSupport = 5
+  case OtherError = 6
+  public init?(rawValue: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @objcMembers public class ARSlamBaseMessage : ObjectiveC.NSObject, RKIHandyJSON.HandyJSON {
+  @objc public var channelId: Swift.String?
+  @objc public var userId: Swift.String?
+  @objc public var promoterUserId: Swift.String?
+  @objc public var messageId: Swift.String?
+  public var color: Swift.Int?
+  @objc public var pointF: RemoteCooperationSDK.ARPoint?
+  public var messageType: RemoteCooperationSDK.ARSlamMessageType?
+  @objc public var doodleContent: Swift.String?
+  public var index: Swift.Int?
+  @objc public var imageUrl: Swift.String?
+  public var scale: CoreFoundation.CGFloat?
+  public var code: RemoteCooperationSDK.ARSlamMessageCode?
+  @objc public var errorMessage: Swift.String?
+  @objc public init(messageType: RemoteCooperationSDK.ARSlamMessageType)
+  @objc required override dynamic public init()
+  @objc deinit
+}
 @objc @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class SCNTextNode : SceneKit.SCNNode {
   @_Concurrency.MainActor(unsafe) public var materials: [SceneKit.SCNMaterial] {
     get
@@ -147,12 +252,6 @@ public let kNotiReportError: Swift.String
   @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
   @objc deinit
 }
-@objc @_inheritsConvenienceInitializers @objcMembers public class RKLandOrientation : ObjectiveC.NSObject {
-  @objc public static var shared: RemoteCooperationSDK.RKLandOrientation
-  @objc public var orientation: UIKit.UIInterfaceOrientationMask
-  @objc override dynamic public init()
-  @objc deinit
-}
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) open class RKBaseViewController : UIKit.UIViewController {
   @_Concurrency.MainActor(unsafe) @objc override dynamic public var preferredStatusBarStyle: UIKit.UIStatusBarStyle {
     @objc get
@@ -249,7 +348,7 @@ public enum ResolutionType : Swift.Int {
   public var status: Swift.String?
   public var mark: Swift.String?
   public var extra: Swift.String?
-  public init(id: Swift.String, name: Swift.String, avatar: Swift.String? = nil, unitName: Swift.String? = nil, deviceType: Swift.String? = nil, status: Swift.String? = nil)
+  public init(id: Swift.String, name: Swift.String, avatar: Swift.String? = nil, unitName: Swift.String? = nil, deviceType: Swift.String? = nil, status: Swift.String? = nil, mark: Swift.String? = nil, extra: Swift.String? = nil)
   @objc deinit
 }
 @objcMembers @objc public class RKDeviceParams : ObjectiveC.NSObject {
@@ -308,10 +407,12 @@ public enum ResolutionType : Swift.Int {
   @objc public func inviteCooperation(channelId: Swift.String, userIdList: [Swift.String], success: @escaping RemoteCooperationSDK.RKCooperationManager.successCompletion, failure: @escaping RemoteCooperationSDK.RKCooperationManager.failureCompletion)
   @objc public func rejoinCooperation(meetingId: Swift.String, meetingName: Swift.String, mediaOn: Swift.Bool = true)
   @objc public func joinCooperation(meetingId: Swift.String, meetingName: Swift.String, mediaOn: Swift.Bool = true)
+  @objc public func useCodeJoinMeeting()
+  @objc public func enterCooperation(meetingId: Swift.String, meetingName: Swift.String, closure: @escaping ((Swift.Bool) -> Swift.Void))
   @objc public func setUploadFolderPath(path: Swift.String)
   @objc public func setScreenSharingExtansId(shareExtenId: Swift.String)
   @objc public func uploadSharePixelBuffer(pixelBuffer: CoreVideo.CVPixelBuffer)
-  @objc public func showRKWindow()
+  @objc public func invite(cancel: Swift.Bool)
   @objc deinit
 }
 extension RemoteCooperationSDK.RKCooperationManager : RKCooperationCore.RKLoginCallback {
@@ -324,13 +425,16 @@ extension RemoteCooperationSDK.RKCooperationManager : RKCooperationCore.RKCallLi
   @objc dynamic public func onCallBusy(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
   @objc dynamic public func onCallRejected(channelId: Swift.String, userId: Swift.String, inviteUserId: Swift.String)
 }
+extension Foundation.NSNotification.Name {
+  public static let RKCooperationEnterWindowNotification: Foundation.Notification.Name
+  public static let RKCooperationExitWindowNotification: Foundation.Notification.Name
+  public static let RKCooperationEnterNotification: Foundation.Notification.Name
+  public static let RKCooperationLeaveNotification: Foundation.Notification.Name
+}
 public typealias ActionHandler = (Swift.Int) -> Swift.Void
 @objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @_Concurrency.MainActor(unsafe) public class RKCustomActionView : RemoteCooperationSDK.RKMaskView {
   @_Concurrency.MainActor(unsafe) @objc override dynamic public func layoutSubviews()
   @objc deinit
-}
-extension UIKit.UIDevice {
-  @objc @_Concurrency.MainActor(unsafe) public static func switchOrientation(auto: Swift.Bool = false, orientation: UIKit.UIInterfaceOrientation = UIApplication.shared.statusBarOrientation)
 }
 @objc public enum RKMeetingFileType : Swift.Int {
   case image = 0
@@ -390,6 +494,7 @@ extension UIKit.UIDevice {
     set
   }
   public var oldWindow: UIKit.UIWindow?
+  public var oldOrientation: UIKit.UIInterfaceOrientation
   public var isMeeting: Swift.Bool {
     get
   }
@@ -403,6 +508,12 @@ extension UIKit.UIDevice {
     get
     set
   }
+  public var trumpetSwitch: Swift.Bool {
+    get
+    set
+  }
+  public var cloudRecordSwitch: Swift.Bool
+  public var maxResolution: RKCooperationCore.RKResolution
   public var channel: RKCooperationCore.RKChannel?
   public func meetingConfigs(userId: [Swift.String])
   public func createMeeting(meetingName: Swift.String, userId: [Swift.String], channelParam: RKCooperationCore.RKChannelParam, onSuccess: @escaping RKCooperationCore.RKOnSuccess, onFailed: @escaping RKCooperationCore.RKOnFailed)
@@ -412,7 +523,9 @@ extension UIKit.UIDevice {
 extension RemoteCooperationSDK.RKMeetingManager {
   public func joinMeeting(channelId: Swift.String, channelName: Swift.String, mediaOn: Swift.Bool = true)
   public func rejoinMeeting(channelId: Swift.String, channelName: Swift.String)
-  public func answerCall(channelId: Swift.String, fromUserId: Swift.String, channelName: Swift.String)
+  public func enterMeeting(channelId: Swift.String, channelName: Swift.String, closure: @escaping ((Swift.Bool) -> Swift.Void))
+  public func codeJoinMeeting()
+  public func answerCall(channelId: Swift.String, fromUserId: Swift.String, channelName: Swift.String, isSoS: Swift.Bool = false)
 }
 extension RemoteCooperationSDK.RKMeetingManager {
   public func removeMeetingMember(_ userId: Swift.String)
@@ -421,10 +534,9 @@ extension RemoteCooperationSDK.RKMeetingManager {
 extension RemoteCooperationSDK.RKMeetingManager {
   public func pushMeetingVC()
   public func createRKSDKWindow(vc: UIKit.UIViewController)
-  public func showRKSDKWindow()
-  public func showRKSDKWindowForInvite()
-  public func hiddenRKSDKWindow()
-  public func hiddenRKSDKWindows()
+  public func showRKSDKWindow(_ onlyShow: Swift.Bool = false)
+  public func hiddenRKSDKWindow(_ onlyHidden: Swift.Bool = false)
+  public func resetSmallViewFrame()
   public func addIncomingCallListener()
   public func removeIncomingCallListener()
 }
@@ -523,6 +635,9 @@ extension Swift.Sequence where Self.Element : Swift.Hashable {
 extension UIKit.UIImage {
   public func tintColor(_ color: UIKit.UIColor) -> UIKit.UIImage
 }
+extension UIKit.UIButton {
+  @objc @_Concurrency.MainActor(unsafe) dynamic public func customPosition(image anImage: UIKit.UIImage?, title: Swift.String, titlePosition: UIKit.UIView.ContentMode, additionalSpacing: CoreFoundation.CGFloat, state: UIKit.UIControl.State)
+}
 public typealias RefreshHandler = () -> Swift.Void
 @objc @_inheritsConvenienceInitializers public class RKColor : ObjectiveC.NSObject {
   @objc override dynamic public init()
@@ -564,6 +679,15 @@ public enum RKThirdMsgType : Swift.String {
 extension RemoteCooperationSDK.ARAlterViewShowStyle : Swift.Equatable {}
 extension RemoteCooperationSDK.ARAlterViewShowStyle : Swift.Hashable {}
 extension RemoteCooperationSDK.ARAlterViewShowStyle : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.ARMsgType : Swift.Equatable {}
+extension RemoteCooperationSDK.ARMsgType : Swift.Hashable {}
+extension RemoteCooperationSDK.ARMsgType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.ARSlamMessageType : Swift.Equatable {}
+extension RemoteCooperationSDK.ARSlamMessageType : Swift.Hashable {}
+extension RemoteCooperationSDK.ARSlamMessageType : Swift.RawRepresentable {}
+extension RemoteCooperationSDK.ARSlamMessageCode : Swift.Equatable {}
+extension RemoteCooperationSDK.ARSlamMessageCode : Swift.Hashable {}
+extension RemoteCooperationSDK.ARSlamMessageCode : Swift.RawRepresentable {}
 extension RemoteCooperationSDK.RKErrorCode : Swift.Equatable {}
 extension RemoteCooperationSDK.RKErrorCode : Swift.Hashable {}
 extension RemoteCooperationSDK.RKErrorCode : Swift.RawRepresentable {}

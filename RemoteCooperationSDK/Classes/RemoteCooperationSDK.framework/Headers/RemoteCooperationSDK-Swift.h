@@ -258,12 +258,76 @@ using UInt = size_t;
 
 #if defined(__OBJC__)
 
+/// 扩展消息
+SWIFT_CLASS("_TtC20RemoteCooperationSDK18ARExtensionMessage")
+@interface ARExtensionMessage : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC20RemoteCooperationSDK7ARPoint")
+@interface ARPoint : NSObject
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+@class NSString;
+enum ARSlamMessageType : NSInteger;
+
+SWIFT_CLASS("_TtC20RemoteCooperationSDK17ARSlamBaseMessage")
+@interface ARSlamBaseMessage : NSObject
+@property (nonatomic, copy) NSString * _Nullable channelId;
+@property (nonatomic, copy) NSString * _Nullable userId;
+@property (nonatomic, copy) NSString * _Nullable promoterUserId;
+@property (nonatomic, copy) NSString * _Nullable messageId;
+@property (nonatomic, strong) ARPoint * _Nullable pointF;
+@property (nonatomic, copy) NSString * _Nullable doodleContent;
+@property (nonatomic, copy) NSString * _Nullable imageUrl;
+@property (nonatomic, copy) NSString * _Nullable errorMessage;
+- (nonnull instancetype)initWithMessageType:(enum ARSlamMessageType)messageType OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+typedef SWIFT_ENUM(NSInteger, ARSlamMessageCode, open) {
+  ARSlamMessageCodeOK = 0,
+  ARSlamMessageCodeExceedTheMaximumNumberLimit = 1,
+  ARSlamMessageCodeSceneLost = 2,
+  ARSlamMessageCodeWithdrawalNothing = 3,
+  ARSlamMessageCodeMarkNoFeatures = 4,
+  ARSlamMessageCodeMarkNotSupport = 5,
+  ARSlamMessageCodeOtherError = 6,
+};
+
+typedef SWIFT_ENUM(NSInteger, ARSlamMessageType, open) {
+  ARSlamMessageTypeMarkDoodleUnknown = -1,
+  ARSlamMessageTypeMarkDoodleRequest = 0,
+  ARSlamMessageTypeMarkDoodleResponse = 1,
+  ARSlamMessageTypeMarkArrowRequest = 2,
+  ARSlamMessageTypeMarkArrowResponse = 3,
+  ARSlamMessageTypeMarkWithdrawalRequest = 4,
+  ARSlamMessageTypeMarkWithdrawalResponse = 5,
+  ARSlamMessageTypeMarkClearRequest = 6,
+  ARSlamMessageTypeMarkClearResponse = 7,
+  ARSlamMessageTypeMarkStopRequest = 8,
+  ARSlamMessageTypeMarkStopResponse = 9,
+  ARSlamMessageTypeMarkStartRequest = 10,
+  ARSlamMessageTypeMarkStartResponse = 11,
+  ARSlamMessageTypeMarkStatusUpdate = 12,
+  ARSlamMessageTypeMarkStateRequest = 13,
+  ARSlamMessageTypeMarkSlamExit = 14,
+  ARSlamMessageTypeMarkCircleRequest = 15,
+  ARSlamMessageTypeMarkCircleResponse = 16,
+  ARSlamMessageTypeMarkLocalImageRequest = 17,
+  ARSlamMessageTypeMarkLocalImageResponse = 18,
+  ARSlamMessageTypeMarkCloudImageRequest = 19,
+  ARSlamMessageTypeMarkCloudImageResponse = 20,
+};
+
+
 SWIFT_CLASS("_TtC20RemoteCooperationSDK3Dev")
 @interface Dev : NSObject
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
-@class NSString;
 
 SWIFT_CLASS("_TtC20RemoteCooperationSDK15DeviceInfoModel")
 @interface DeviceInfoModel : NSObject
@@ -497,6 +561,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) RKCooperationManager *
 /// \param meetingName 会议名称
 ///
 - (void)joinCooperationWithMeetingId:(NSString * _Nonnull)meetingId meetingName:(NSString * _Nonnull)meetingName mediaOn:(BOOL)mediaOn;
+/// 通过邀请码加入会议
+- (void)useCodeJoinMeeting;
+- (void)enterCooperationWithMeetingId:(NSString * _Nonnull)meetingId meetingName:(NSString * _Nonnull)meetingName closure:(void (^ _Nonnull)(BOOL))closure;
 /// 设置上传文件路径
 /// \param path 路径名
 ///
@@ -509,7 +576,14 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) RKCooperationManager *
 /// \param pixelBuffer 获取的屏幕buffer
 ///
 - (void)uploadSharePixelBufferWithPixelBuffer:(CVPixelBufferRef _Nonnull)pixelBuffer;
-- (void)showRKWindow;
+- (void)inviteWithCancel:(BOOL)cancel;
+@end
+
+
+@interface RKCooperationManager (SWIFT_EXTENSION(RemoteCooperationSDK)) <RKCallListener>
+- (void)onCallAcceptWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId;
+- (void)onCallBusyWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId inviteUserId:(NSString * _Nonnull)inviteUserId;
+- (void)onCallRejectedWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId inviteUserId:(NSString * _Nonnull)inviteUserId;
 @end
 
 @class RKIJoinedChannel;
@@ -518,13 +592,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) RKCooperationManager *
 - (void)onJoinedChannelList:(NSArray<RKIJoinedChannel *> * _Nullable)channelList;
 - (void)onLoginWithReason:(enum RKCooperationCode)reason;
 - (void)onLogoutWithReason:(enum RKCooperationCode)reason;
-@end
-
-
-@interface RKCooperationManager (SWIFT_EXTENSION(RemoteCooperationSDK)) <RKCallListener>
-- (void)onCallAcceptWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId;
-- (void)onCallBusyWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId inviteUserId:(NSString * _Nonnull)inviteUserId;
-- (void)onCallRejectedWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId inviteUserId:(NSString * _Nonnull)inviteUserId;
 @end
 
 @class UITouch;
@@ -574,16 +641,6 @@ SWIFT_CLASS("_TtC20RemoteCooperationSDK6RKFont")
 @end
 
 
-SWIFT_CLASS("_TtC20RemoteCooperationSDK17RKLandOrientation")
-@interface RKLandOrientation : NSObject
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, strong) RKLandOrientation * _Nonnull shared;)
-+ (RKLandOrientation * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-+ (void)setShared:(RKLandOrientation * _Nonnull)value;
-@property (nonatomic) UIInterfaceOrientationMask orientation;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC20RemoteCooperationSDK15RKLineWidthView")
 @interface RKLineWidthView : UIView
 - (nonnull instancetype)initWithFrame:(CGRect)frame SWIFT_UNAVAILABLE;
@@ -619,13 +676,13 @@ SWIFT_CLASS("_TtC20RemoteCooperationSDK16RKMeetingManager")
 
 
 
-
 @class RKChannelParam;
 
 @interface RKMeetingManager (SWIFT_EXTENSION(RemoteCooperationSDK)) <RKIncomingCallListener>
 - (void)onReceiveCallWithChannelId:(NSString * _Nonnull)channelId fromUserId:(NSString * _Nonnull)fromUserId createTime:(int64_t)createTime channelTitle:(NSString * _Nonnull)channelTitle channelParam:(RKChannelParam * _Nullable)channelParam;
 - (void)onCallCanceledWithChannelId:(NSString * _Nonnull)channelId userId:(NSString * _Nonnull)userId;
 @end
+
 
 
 
@@ -791,11 +848,10 @@ SWIFT_CLASS("_TtC20RemoteCooperationSDK2UI")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@class UIImage;
 
-
-
-@interface UIDevice (SWIFT_EXTENSION(RemoteCooperationSDK))
-+ (void)switchOrientationWithAuto:(BOOL)auto_ orientation:(UIInterfaceOrientation)orientation;
+@interface UIButton (SWIFT_EXTENSION(RemoteCooperationSDK))
+- (void)customPositionWithImage:(UIImage * _Nullable)anImage title:(NSString * _Nonnull)title titlePosition:(UIViewContentMode)titlePosition additionalSpacing:(CGFloat)additionalSpacing state:(UIControlState)state;
 @end
 
 
